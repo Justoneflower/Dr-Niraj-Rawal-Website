@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inner Awakening Programme 2.0 — Dr. Niraj Rawal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Marcellus&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#07060f; --indigo-deep:#120d2e; --indigo:#1e1648; --violet:#3a2a7a;
+    --gold:#e7c66b; --gold-bright:#ffe9a8; --gold-deep:#b8923c;
+    --mist:#cfc8e8; --text-soft:#a59fc4; --green:#3ddc97;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--void);color:var(--mist);font-family:'Jost',sans-serif;overflow-x:hidden;scroll-behavior:smooth;}
+  ::selection{background:var(--gold);color:var(--void);}
+  img{max-width:100%;display:block;}
+
+  /* ---------- starfield ---------- */
+  .starfield{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      radial-gradient(1.4px 1.4px at 12% 18%,rgba(255,255,255,.6),transparent),
+      radial-gradient(1.2px 1.2px at 78% 8%,rgba(231,198,107,.55),transparent),
+      radial-gradient(1.5px 1.5px at 42% 62%,rgba(255,255,255,.5),transparent),
+      radial-gradient(1.1px 1.1px at 88% 48%,rgba(255,255,255,.45),transparent),
+      radial-gradient(1.3px 1.3px at 24% 82%,rgba(231,198,107,.45),transparent),
+      radial-gradient(1.2px 1.2px at 64% 92%,rgba(255,255,255,.45),transparent);
+    animation:twinkle 7s ease-in-out infinite alternate;
+  }
+  @keyframes twinkle{from{opacity:.4;}to{opacity:.9;}}
+
+  .wrap{position:relative;z-index:1;}
+
+  /* ---------- announcement bar ---------- */
+  .topbar{
+    background:linear-gradient(120deg,var(--gold-bright),var(--gold-deep));
+    color:var(--void);text-align:center;padding:10px 16px;
+    font-size:.82rem;letter-spacing:.04em;font-weight:500;
+  }
+  .topbar b{font-weight:600;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:880px;margin:0 auto;padding:54px 22px 40px;text-align:center;
+  }
+  .badge{
+    display:inline-block;border:1px solid rgba(231,198,107,.4);
+    color:var(--gold);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+    padding:8px 18px;border-radius:30px;text-indent:.3em;
+  }
+  .hero h1{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(2.3rem,7vw,4rem);line-height:1.08;color:#fff;margin:22px 0 0;
+  }
+  .hero h1 em{
+    font-style:italic;
+    background:linear-gradient(120deg,var(--gold-bright),var(--gold-deep));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .hero .sub{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(1.1rem,2.8vw,1.5rem);color:var(--mist);
+    max-width:620px;margin:18px auto 0;line-height:1.55;
+  }
+  .meta-row{
+    display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px;
+  }
+  .meta{
+    background:rgba(231,198,107,.06);border:1px solid rgba(231,198,107,.22);
+    border-radius:12px;padding:10px 18px;font-size:.8rem;
+  }
+  .meta b{color:var(--gold-bright);font-weight:500;}
+
+  /* ---------- price + cta ---------- */
+  .price-block{margin-top:32px;}
+  .price{
+    font-family:'Cormorant Garamond',serif;color:#fff;
+    display:flex;align-items:baseline;gap:14px;justify-content:center;
+  }
+  .price .now{font-size:3.6rem;font-weight:600;color:var(--gold-bright);line-height:1;}
+  .price .was{font-size:1.5rem;color:var(--text-soft);text-decoration:line-through;}
+  .price-note{font-size:.78rem;color:var(--text-soft);margin-top:6px;letter-spacing:.05em;}
+
+  .btn{
+    font-family:'Jost',sans-serif;font-size:.92rem;letter-spacing:.1em;
+    text-transform:uppercase;font-weight:500;border-radius:46px;cursor:pointer;
+    text-decoration:none;display:inline-block;transition:.3s;border:none;
+  }
+  .btn-gold{
+    background:linear-gradient(120deg,var(--gold-bright),var(--gold-deep));
+    color:var(--void);padding:18px 40px;
+    box-shadow:0 10px 34px rgba(231,198,107,.34);
+  }
+  .btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 42px rgba(231,198,107,.5);}
+  .pulse{animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{box-shadow:0 10px 34px rgba(231,198,107,.34);}50%{box-shadow:0 10px 44px rgba(231,198,107,.7);}}
+  .cta-wrap{margin-top:26px;}
+  .reassure{margin-top:14px;font-size:.76rem;color:var(--text-soft);}
+
+  /* ---------- countdown ---------- */
+  .countdown{
+    display:flex;gap:10px;justify-content:center;margin-top:30px;
+  }
+  .cd-box{
+    background:linear-gradient(165deg,rgba(30,22,72,.85),rgba(18,13,46,.7));
+    border:1px solid rgba(231,198,107,.25);border-radius:12px;
+    width:74px;padding:12px 6px;
+  }
+  .cd-box .n{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--gold-bright);line-height:1;}
+  .cd-box .l{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--text-soft);margin-top:6px;}
+
+  /* ---------- section frame ---------- */
+  section{max-width:920px;margin:0 auto;padding:60px 22px;}
+  .sec-head{text-align:center;margin-bottom:42px;}
+  .sec-head .kick{font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);text-indent:.35em;}
+  .sec-head h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;
+    font-size:clamp(1.9rem,5vw,3rem);color:#fff;margin-top:12px;
+  }
+
+  /* ---------- learn list ---------- */
+  .learn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+  .learn{
+    display:flex;gap:14px;align-items:flex-start;
+    background:linear-gradient(165deg,rgba(30,22,72,.6),rgba(18,13,46,.5));
+    border:1px solid rgba(231,198,107,.16);border-radius:14px;padding:22px;
+  }
+  .tick{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:rgba(61,220,151,.14);border:1px solid var(--green);
+    display:grid;place-items:center;color:var(--green);font-size:.8rem;
+  }
+  .learn p{font-size:.92rem;line-height:1.55;color:var(--mist);}
+  .learn p b{color:var(--gold-bright);font-weight:500;display:block;margin-bottom:3px;}
+
+  /* ---------- agenda ---------- */
+  .agenda{display:flex;flex-direction:column;gap:14px;}
+  .step{
+    display:flex;gap:18px;align-items:flex-start;
+    border-left:2px solid rgba(231,198,107,.3);padding:6px 0 6px 22px;position:relative;
+  }
+  .step::before{
+    content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;
+    border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold);
+  }
+  .step .t{font-family:'Marcellus',serif;color:var(--gold-bright);font-size:1.05rem;}
+  .step .d{font-size:.88rem;color:var(--text-soft);margin-top:4px;line-height:1.5;}
+
+  /* ---------- for-whom ---------- */
+  .whom{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .whom div{
+    background:rgba(231,198,107,.05);border:1px solid rgba(231,198,107,.18);
+    border-radius:12px;padding:18px 20px;font-size:.9rem;line-height:1.5;
+  }
+  .whom div::before{content:"✦  ";color:var(--gold);}
+
+  /* ---------- guide strip ---------- */
+  .guide{
+    display:flex;gap:28px;align-items:center;flex-wrap:wrap;justify-content:center;
+    background:linear-gradient(135deg,var(--indigo),var(--indigo-deep));
+    border:1px solid rgba(231,198,107,.25);border-radius:20px;padding:34px;
+  }
+  .guide img{
+    width:150px;height:150px;object-fit:cover;border-radius:50%;
+    border:2px solid rgba(231,198,107,.4);flex:none;
+  }
+  .guide .gt{max-width:520px;}
+  .guide .gt h3{font-family:'Cormorant Garamond',serif;font-size:1.7rem;color:#fff;font-weight:600;}
+  .guide .gt .role{color:var(--gold);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;margin:4px 0 12px;}
+  .guide .gt p{font-size:.92rem;line-height:1.65;color:var(--text-soft);}
+
+  /* ---------- testimonials ---------- */
+  .tcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+  .tcard{
+    background:linear-gradient(165deg,rgba(30,22,72,.6),rgba(18,13,46,.5));
+    border:1px solid rgba(231,198,107,.16);border-radius:14px;padding:24px;
+  }
+  .stars{color:var(--gold);font-size:.85rem;letter-spacing:.1em;}
+  .tcard p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--mist);line-height:1.55;margin:12px 0;}
+  .tcard .who{font-size:.8rem;color:var(--gold-bright);letter-spacing:.05em;}
+
+  /* ---------- signup form ---------- */
+  .signup{
+    max-width:560px;margin:0 auto;
+    background:
+      radial-gradient(ellipse at 80% 0%,rgba(58,42,122,.7),transparent),
+      linear-gradient(135deg,var(--indigo),var(--indigo-deep));
+    border:1px solid rgba(231,198,107,.35);border-radius:22px;
+    padding:clamp(28px,5vw,46px);
+  }
+  .signup h2{
+    font-family:'Cormorant Garamond',serif;font-weight:600;color:#fff;
+    font-size:clamp(1.7rem,4.5vw,2.4rem);text-align:center;
+  }
+  .signup .sform-sub{text-align:center;color:var(--text-soft);font-size:.88rem;margin:8px 0 26px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+  .field input{
+    width:100%;background:rgba(7,6,15,.6);border:1px solid rgba(231,198,107,.25);
+    border-radius:10px;padding:13px 15px;color:#fff;font-family:'Jost',sans-serif;font-size:.95rem;
+    transition:.25s;
+  }
+  .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(231,198,107,.12);}
+  .field input::placeholder{color:#5d567e;}
+  .err{color:#ff8b8b;font-size:.74rem;margin-top:5px;display:none;}
+  .field.invalid .err{display:block;}
+  .field.invalid input{border-color:#ff8b8b;}
+  .form-price{
+    text-align:center;margin:6px 0 18px;font-size:.9rem;color:var(--mist);
+  }
+  .form-price b{color:var(--gold-bright);font-size:1.5rem;font-family:'Cormorant Garamond',serif;}
+  .form-price s{color:var(--text-soft);margin-left:8px;}
+  .signup .btn-gold{width:100%;text-align:center;}
+  .trust-row{
+    display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+    margin-top:18px;font-size:.74rem;color:var(--text-soft);
+  }
+  .trust-row span::before{content:"✓ ";color:var(--green);}
+
+  /* success state */
+  .success{display:none;text-align:center;}
+  .success.show{display:block;}
+  .signup.done .sform{display:none;}
+  .success .ring{
+    width:78px;height:78px;border-radius:50%;margin:0 auto 18px;
+    background:rgba(61,220,151,.12);border:2px solid var(--green);
+    display:grid;place-items:center;color:var(--green);font-size:2rem;
+  }
+  .success h2{margin-bottom:10px;}
+  .success p{color:var(--text-soft);font-size:.92rem;line-height:1.6;}
+  .success .wa{
+    display:inline-block;margin-top:20px;background:#25d366;color:#04210f;
+    padding:13px 26px;border-radius:40px;text-decoration:none;font-weight:600;
+    font-size:.88rem;letter-spacing:.04em;
+  }
+
+  /* ---------- faq ---------- */
+  .faq-item{
+    border:1px solid rgba(231,198,107,.16);border-radius:12px;
+    margin-bottom:10px;overflow:hidden;background:rgba(30,22,72,.4);
+  }
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;cursor:pointer;
+    color:#fff;font-family:'Jost',sans-serif;font-size:.96rem;font-weight:500;
+    padding:18px 20px;display:flex;justify-content:space-between;gap:14px;align-items:center;
+  }
+  .faq-q .plus{color:var(--gold);font-size:1.3rem;flex:none;transition:.3s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .faq-a p{padding:0 20px 18px;color:var(--text-soft);font-size:.9rem;line-height:1.6;}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid rgba(231,198,107,.14);background:var(--indigo-deep);
+    text-align:center;padding:40px 22px;position:relative;z-index:1;
+  }
+  footer .fname{font-family:'Marcellus',serif;color:var(--gold-bright);font-size:1.1rem;letter-spacing:.1em;}
+  footer p{font-size:.8rem;color:var(--text-soft);margin-top:8px;line-height:1.6;}
+  footer a{color:var(--gold);text-decoration:none;}
+  .disclaimer{font-size:.68rem;opacity:.7;max-width:620px;margin:14px auto 0;}
+
+  /* ---------- sticky mobile cta ---------- */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:linear-gradient(180deg,rgba(7,6,15,0),var(--void) 40%);
+    padding:14px 16px;display:none;
+  }
+  .sticky-cta .btn-gold{width:100%;text-align:center;padding:15px;}
+  @media(max-width:680px){.sticky-cta{display:block;}}
+
+  /* placeholder note (remove before launch) */
+  .ph-note{
+    max-width:920px;margin:0 auto;padding:14px 22px;
+    background:rgba(255,139,139,.08);border:1px dashed rgba(255,139,139,.5);
+    border-radius:10px;color:#ffb3b3;font-size:.78rem;line-height:1.5;
+  }
+</style>
+</head>
+<body>
+
+  <div class="starfield"></div>
+
+  <div class="wrap">
+
+    <!-- announcement -->
+    <div class="topbar">
+      ✦ Limited-time offer &nbsp;·&nbsp; Inner Awakening Programme 2.0 for just <b>₹99</b> &nbsp;·&nbsp; Seats filling fast
+    </div>
+
+    <!-- DEV NOTE: delete this block before going live -->
+    <div class="ph-note">
+      <b>Note for the developer / Dr. Rawal:</b> Programme dates, duration, session details,
+      bonuses and testimonials below are realistic placeholders. Please confirm or replace
+      every italic / bracketed detail with the real programme information before publishing.
+    </div>
+
+    <!-- ===================== HERO ===================== -->
+    <header class="hero">
+      <span class="badge">Signature Programme</span>
+      <h1>Inner Awakening<br><em>Programme 2.0</em></h1>
+      <p class="sub">A guided live experience to quiet the mind, release old patterns, and step into a calmer, more conscious life — across body, mind and spirit.</p>
+
+      <div class="meta-row">
+        <div class="meta">🗓 <b>[Date to confirm]</b></div>
+        <div class="meta">⏱ <b>3-Hour Live Session</b></div>
+        <div class="meta">📍 <b>Online · Zoom</b></div>
+        <div class="meta">🗣 <b>Hindi</b></div>
+      </div>
+
+      <div class="price-block">
+        <div class="price">
+          <span class="now">₹99</span>
+          <span class="was">₹999</span>
+        </div>
+        <div class="price-note">90% off · One-time payment · Lifetime recording access</div>
+      </div>
+
+      <div class="cta-wrap">
+        <a href="#register" class="btn btn-gold pulse">Reserve My Seat for ₹99</a>
+        <div class="reassure">🔒 Secure registration · Instant confirmation on WhatsApp</div>
+      </div>
+
+      <div class="countdown" id="countdown">
+        <div class="cd-box"><div class="n" id="cd-d">00</div><div class="l">Days</div></div>
+        <div class="cd-box"><div class="n" id="cd-h">00</div><div class="l">Hours</div></div>
+        <div class="cd-box"><div class="n" id="cd-m">00</div><div class="l">Mins</div></div>
+        <div class="cd-box"><div class="n" id="cd-s">00</div><div class="l">Secs</div></div>
+      </div>
+    </header>
+
+    <!-- ===================== WHAT YOU LEARN ===================== -->
+    <section>
+      <div class="sec-head">
+        <div class="kick">Inside the Programme</div>
+        <h2>What You Will Experience</h2>
+      </div>
+      <div class="learn-grid">
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>Guided Deep Meditation</b>A live, step-by-step practice to calm a restless mind and settle into genuine stillness.</p>
+        </div>
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>Third Eye Awakening</b>Focus techniques to sharpen intuition, clarity and inner awareness.</p>
+        </div>
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>7 Chakra Balancing</b>An energy-centred journey through the body's subtle system to feel grounded and aligned.</p>
+        </div>
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>Subconscious Reset</b>Simple tools to recognise limiting beliefs and gently rewrite your inner script.</p>
+        </div>
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>The Science of Manifestation</b>How focused intention and a calm mind help you move toward your goals.</p>
+        </div>
+        <div class="learn">
+          <div class="tick">✓</div>
+          <p><b>Daily Practice Blueprint</b>A take-home routine so the calm you feel in the session stays with you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== AGENDA ===================== -->
+    <section>
+      <div class="sec-head">
+        <div class="kick">Session Flow</div>
+        <h2>How the Live Session Unfolds</h2>
+      </div>
+      <div class="agenda">
+        <div class="step">
+          <div>
+            <div class="t">Opening &amp; Grounding</div>
+            <div class="d">Settling in, intention-setting, and a gentle breath practice to arrive fully.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <div class="t">The Awakening Practice</div>
+            <div class="d">Guided meditation through the chakras and third eye focus work.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <div class="t">Releasing Old Patterns</div>
+            <div class="d">Subconscious reset techniques to soften long-held mental blocks.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <div class="t">Live Q&amp;A with Dr. Rawal</div>
+            <div class="d">Bring your questions — get direct, personal guidance.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div>
+            <div class="t">Your Daily Blueprint</div>
+            <div class="d">A simple home routine to carry the practice forward.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOR WHOM ===================== -->
+    <section>
+      <div class="sec-head">
+        <div class="kick">Is This For You?</div>
+        <h2>This Programme Is For You If…</h2>
+      </div>
+      <div class="whom">
+        <div>You feel mentally restless and want lasting calm.</div>
+        <div>You are new to meditation and want clear guidance.</div>
+        <div>You feel stuck in old patterns and want to move forward.</div>
+        <div>You want more focus, clarity and inner confidence.</div>
+        <div>You are curious about chakras and energy practices.</div>
+        <div>You want a simple practice that fits a busy life.</div>
+      </div>
+    </section>
+
+    <!-- ===================== GUIDE ===================== -->
+    <section>
+      <div class="guide">
+        <img src="dr-niraj.png" alt="Dr. Niraj Rawal" />
+        <div class="gt">
+          <h3>Dr. Niraj Rawal</h3>
+          <div class="role">Your Guide · Inner Awakening</div>
+          <p>For over fifteen years, Dr. Niraj Rawal has guided people on the path of meditation, self discovery and conscious living. From his centre in Sikar, Rajasthan, he has welcomed thousands of seekers into his programmes, blending spiritual psychology with practical inner-awakening techniques.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TESTIMONIALS ===================== -->
+    <section>
+      <div class="sec-head">
+        <div class="kick">Words From Seekers</div>
+        <h2>What Past Participants Say</h2>
+      </div>
+      <div class="tcards">
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"I finally understood how to quiet my mind. The session felt calm and very practical."</p>
+          <div class="who">— [Participant name], [City]</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Dr. Rawal explains everything so simply. I use the daily routine every morning now."</p>
+          <div class="who">— [Participant name], [City]</div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>"Worth so much more than ₹99. I felt lighter and clearer by the end."</p>
+          <div class="who">— [Participant name], [City]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SIGNUP FORM ===================== -->
+    <section id="register">
+      <div class="signup" id="signupCard">
+
+        <div class="sform">
+          <h2>Reserve Your Seat</h2>
+          <p class="sform-sub">Fill in your details to register for Inner Awakening Programme 2.0</p>
+
+          <div class="form-price">
+            Programme Fee: <b>₹99</b> <s>₹999</s>
+          </div>
+
+          <div class="field" id="f-name">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Your full name" />
+            <div class="err">Please enter your name.</div>
+          </div>
+
+          <div class="field" id="f-phone">
+            <label for="phone">WhatsApp Number</label>
+            <input type="tel" id="phone" placeholder="10-digit mobile number" maxlength="10" />
+            <div class="err">Please enter a valid 10-digit number.</div>
+          </div>
+
+          <div class="field" id="f-email">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@example.com" />
+            <div class="err">Please enter a valid email address.</div>
+          </div>
+
+          <button class="btn btn-gold" id="submitBtn">Proceed to Pay ₹99</button>
+
+          <div class="trust-row">
+            <span>Secure payment</span>
+            <span>Instant confirmation</span>
+            <span>Lifetime recording</span>
+          </div>
+        </div>
+
+        <div class="success" id="successBox">
+          <div class="ring">✓</div>
+          <h2>Seat Reserved!</h2>
+          <p>Thank you, <b id="successName">friend</b>. Your details are saved.<br>
+          To confirm your seat, complete the ₹99 payment and our team will message you the joining link on WhatsApp.</p>
+          <a class="wa" id="waLink" href="#" target="_blank" rel="noopener">Confirm on WhatsApp →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section>
+      <div class="sec-head">
+        <div class="kick">Good to Know</div>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q">Do I need any experience with meditation? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Not at all. The programme is designed for complete beginners as well as those who already practise. Everything is guided step by step.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">What do I need to join? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Just a phone or laptop with internet, a quiet space, and a willingness to participate. The session is held live on Zoom.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Will I get a recording? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes. All registered participants receive lifetime access to the session recording, so you can revisit the practices anytime.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How do I receive the joining link? <span class="plus">+</span></button>
+        <div class="faq-a"><p>After you register and complete the ₹99 payment, the joining link and reminders are sent to you on WhatsApp and email.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is this a substitute for medical treatment? <span class="plus">+</span></button>
+        <div class="faq-a"><p>No. This is a meditation and personal-growth programme for wellbeing. It is not medical or psychological treatment. For any health concern, please consult a qualified professional.</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer>
+      <div class="fname">Dr. Niraj Rawal · Inner Awakening</div>
+      <p>First Floor, Shop No. C&amp;D, Bioscope Mall, Rani Sati Road, Sikar, Rajasthan<br>
+      <a href="tel:09352080871">093520 80871</a> &nbsp;·&nbsp;
+      <a href="https://wa.me/919352080871">WhatsApp</a></p>
+      <p class="disclaimer">This programme supports personal growth and wellbeing. It is not a substitute for medical or psychological treatment. Results vary from person to person. For health concerns, please consult a qualified professional.</p>
+      <p style="margin-top:10px;">© 2026 Dr. Niraj Rawal. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <!-- sticky mobile cta -->
+  <div class="sticky-cta">
+    <a href="#register" class="btn btn-gold">Reserve My Seat · ₹99</a>
+  </div>
+
+<script>
+  /* ---------- countdown (48h from first visit feel; here fixed 3 days) ---------- */
+  const deadline = new Date().getTime() + 3*24*60*60*1000;
+  function tick(){
+    const now=new Date().getTime();
+    let diff=deadline-now; if(diff<0)diff=0;
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m=Math.floor((diff%(1000*60*60))/(1000*60));
+    const s=Math.floor((diff%(1000*60))/1000);
+    document.getElementById('cd-d').textContent=String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent=String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- faq accordion ---------- */
+  document.querySelectorAll('.faq-q').forEach(q=>{
+    q.addEventListener('click',()=>{
+      const item=q.parentElement;
+      const ans=item.querySelector('.faq-a');
+      const open=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>{
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.maxHeight=null;
+      });
+      if(!open){
+        item.classList.add('open');
+        ans.style.maxHeight=ans.scrollHeight+'px';
+      }
+    });
+  });
+
+  /* ---------- form validation + submit ---------- */
+  const card=document.getElementById('signupCard');
+  const btn=document.getElementById('submitBtn');
+
+  function setErr(id,bad){
+    document.getElementById(id).classList.toggle('invalid',bad);
+  }
+
+  btn.addEventListener('click',()=>{
+    const name=document.getElementById('name').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const email=document.getElementById('email').value.trim();
+
+    const nameBad=name.length<2;
+    const phoneBad=!/^[6-9]\d{9}$/.test(phone);
+    const emailBad=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    setErr('f-name',nameBad);
+    setErr('f-phone',phoneBad);
+    setErr('f-email',emailBad);
+
+    if(nameBad||phoneBad||emailBad) return;
+
+    /* -------------------------------------------------------------
+       TO MAKE THIS LIVE, connect ONE of these here:
+       1) A payment link  -> window.location = 'https://rzp.io/your-link';
+       2) Save the lead   -> fetch() to a Google Sheet / form endpoint
+       Right now it just shows a confirmation + WhatsApp handoff.
+    --------------------------------------------------------------*/
+
+    document.getElementById('successName').textContent=name;
+    const msg=encodeURIComponent(
+      'Hello, I just registered for the Inner Awakening Programme 2.0 (₹99).\n'+
+      'Name: '+name+'\nPhone: '+phone+'\nEmail: '+email
+    );
+    document.getElementById('waLink').href='https://wa.me/919352080871?text='+msg;
+
+    card.classList.add('done');
+    document.getElementById('successBox').classList.add('show');
+    document.getElementById('register').scrollIntoView({behavior:'smooth'});
+  });
+
+  /* numbers only in phone field */
+  document.getElementById('phone').addEventListener('input',e=>{
+    e.target.value=e.target.value.replace(/\D/g,'');
+  });
+</script>
+</body>
+</html>
