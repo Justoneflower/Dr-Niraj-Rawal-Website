@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dr. Niraj Rawal: Heal · Awaken · Transform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-active">
+
+<!-- ═══════════ LOADING SCREEN ═══════════ -->
+<div id="intro">
+
+  <!-- rainbow arc text -->
+  <div class="arc-wrap">
+    <svg class="arc-svg" viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stop-color="#7b8fd4"/>
+          <stop offset="30%"  stop-color="#a89fd8"/>
+          <stop offset="55%"  stop-color="#6bc4c4"/>
+          <stop offset="80%"  stop-color="#8fd4b4"/>
+          <stop offset="100%" stop-color="#c9a84c"/>
+        </linearGradient>
+        <path id="arcPath" d="M 40,240 A 210,210 0 0,1 460,240"/>
+      </defs>
+      <text class="arc-text" fill="url(#arcGrad)">
+        <textPath href="#arcPath" startOffset="50%" text-anchor="middle">
+          EVERY PROBLEM HAS A SOLUTION
+        </textPath>
+      </text>
+    </svg>
+  </div>
+
+  <div class="intro-logo">
+    <img src="logo-centre.png" alt="Dr. Niraj Rawal"/>
+  </div>
+
+  <div class="intro-bottom">
+    <div class="intro-sub">Awareness + Understanding + Action = Transformation</div>
+    <div class="intro-tagline">Science Guides the Mind &nbsp; Spirit Awakens the Soul</div>
+  </div>
+
+  <div class="loader-wrap">
+    <div class="loader-track"><div class="loader-bar"></div></div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
+</div>
+<button class="skip-btn" id="skipBtn">Skip</button>
+
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav id="nav">
+  <div class="nav-brand">
+    <img src="logo-centre.png" alt="Logo" class="nav-logo"/>
+    <div>
+      <strong>Dr. Niraj Rawal</strong>
+      <span>Inner Awakening</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Stories</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#webinar" class="btn btn-outline-sm">Free Webinar</a>
+    <a href="#contact" class="btn btn-dark-sm">Book Consultation</a>
+  </div>
+</nav>
+
+
+<!-- ═══════════ PAGE ═══════════ -->
+<div class="page" id="page">
+
+  <!-- 1. HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-text">
+      <div class="hero-badge">Neuroscience · Meditation · Consciousness · Healing</div>
+      <h1>Heal Your Past, Reprogram Your Subconscious &amp; Create the Life You Were Meant to Live</h1>
+      <p class="hero-sub">Discover the powerful connection between your mind, emotions, energy, and inner consciousness.</p>
+      <p class="hero-proof">"Helping 15,000+ People Through Neuroscience, Meditation, Chakra Healing, Manifestation &amp; Inner Transformation."</p>
+      <div class="hero-btns">
+        <a href="#webinar" class="btn btn-primary">Join Free Webinar</a>
+        <a href="#contact" class="btn btn-outline">Book Consultation</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <div class="hero-photo-wrap">
+        <img src="dr-niraj.png" alt="Dr. Niraj Rawal"/>
+        <div class="hero-photo-glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. STATS COUNTER (dark) -->
+  <section class="stats-section" id="stats">
+    <div class="stats-inner">
+      <h2 class="stats-heading">Trusted By Thousands Across India</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num" data-target="12000">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Students Trained</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="10">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Years of Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="25">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Certifications &amp; Specializations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="2000">0</div>
+          <div class="stat-plus">+</div>
+          <div class="stat-label">Success Stories &amp; Transformations</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PROBLEMS + SOLUTIONS (animated) -->
+  <section class="ps-section">
+    <div class="ps-grid">
+      <div class="problems-card">
+        <div class="ps-kicker">Identify Your Challenge</div>
+        <h2>Are You Struggling With?</h2>
+        <ul class="check-list" id="problemsList">
+          <li data-i="0">Anxiety</li>
+          <li data-i="1">Overthinking</li>
+          <li data-i="2">Lack of Confidence</li>
+          <li data-i="3">Relationship Problems</li>
+          <li data-i="4">Financial Blocks</li>
+          <li data-i="5">Emotional Trauma</li>
+          <li data-i="6">Fear and Stress</li>
+          <li data-i="7">Lack of Direction</li>
+        </ul>
+      </div>
+      <div class="solutions-card">
+        <div class="ps-kicker">The Path Forward</div>
+        <h2>Our Transformation System</h2>
+        <ul class="dot-list" id="solutionsList">
+          <li data-i="0">Subconscious Reprogramming</li>
+          <li data-i="1">Chakra Healing</li>
+          <li data-i="2">DNA Activation</li>
+          <li data-i="3">Manifestation Training</li>
+          <li data-i="4">Meditation</li>
+          <li data-i="5">Emotional Release</li>
+          <li data-i="6">Life Pattern Healing</li>
+          
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. COURSES -->
+  <section class="courses-section" id="courses">
+    <div class="sec-head">
+      <div class="sec-kicker">Transformation Programmes</div>
+      <h2 class="font-cormorant">Course Preview</h2>
+      <p>Each programme is a complete, guided experience. Choose the path that speaks to you.</p>
+    </div>
+    <!-- ── ROW 1: Inner Awakening 2.0 (full width, light) ── -->
+    <div class="courses-featured-stack">
+
+      <div class="course-card course-featured" style="--ac:#a89fd8;">
+        <div class="course-accent"></div>
+        <img src="image6.jpg" alt="Inner Awakening Programme 2.0" class="course-img">
+        <div class="course-body">
+          <h3>Inner Awakening Programme 2.0</h3>
+          <p class="course-hook">For years, you may have been searching for answers outside. But the greatest transformation begins within.</p>
+          <p class="course-desc">Inner Awakening Programme 2.0 is a complete transformational experience designed to help you heal emotional pain, release limiting patterns, awaken your inner power, and align your mind, body, soul, and energy with the life you truly desire.</p>
+          <ul class="course-points">
+            <li>Heal Deeply</li>
+            <li>Awaken Fully</li>
+            <li>Live Consciously</li>
+            <li>Transform Completely</li>
+          </ul>
+          <a href="course.html?course=inner" class="course-cta">Your Journey Begins Within</a>
+
+        </div> 
+      </div>
+
+      <!-- ── ROW 2: SUPER HUMAN (full width, dark) ── -->
+      <div class="course-card course-featured course-dark">
+        <img src="image7.jpg" alt="SUPER HUMAN" class="course-img">
+        <div class="course-body">
+          <h3>SUPER HUMAN</h3>
+          <p class="course-tagline">The Ultimate Mind · Energy · Identity · Reality Transformation System</p>
+          <p class="course-desc">Designed for individuals who refuse to live an ordinary life, SUPER HUMAN combines neuroscience, subconscious reprogramming, manifestation, identity transformation, energy mastery, and consciousness activation into one complete life-upgrade experience.</p>
+          <ul class="course-points">
+            <li>Manifest Your Dream Life</li>
+            <li>Install Your Alpha Identity</li>
+            <li>Activate Higher Consciousness</li>
+            <li>Unlock Limitless Potential</li>
+          </ul>
+          <div class="sh-taglines">
+            <span>Transform Yourself.</span>
+            <span>Transform Your Reality.</span>
+          </div>
+          <a href="course.html?course=superhuman" class="course-cta course-cta-gold">Become SUPER HUMAN</a>
+        </div>
+      </div>
+
+      <!-- ── ROW 3: Manifestation (full width, gold accent) ── -->
+      <div class="course-card course-featured" style="--ac:#c9a84c;">
+        <div class="course-accent"></div>
+        <img src="image5.jpg" alt="Manifestation & Abundant Life" class="course-img">
+        <div class="course-body">
+          <h3>Manifestation &amp; Abundant Life</h3>
+          <p class="course-hook">You were not born to struggle. You were born to create, grow, thrive, and live abundantly.</p>
+          <p class="course-desc">Discover a powerful step-by-step system to transform your beliefs, elevate your energy, align with your goals, and attract greater abundance in every area of life — health, wealth, relationships, happiness, and purpose.</p>
+          <ul class="course-points">
+            <li>Think Abundantly</li>
+            <li>Feel Abundantly</li>
+            <li>Live Abundantly</li>
+            <li>Manifest Consciously</li>
+          </ul>
+          <a href="course.html?course=manifestation" class="course-cta">Create the Life You Truly Desire</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── 3-COLUMN GRID: Third Eye · 7 Chakra · Meditation ── -->
+    <div class="courses-grid courses-grid-3" style="margin-top:22px;">
+
+      <div class="course-card" style="--ac:#7b8fd4;">
+        <div class="course-accent"></div>
+        <img src="image3.jpg" alt="Third Eye Activation" class="course-img">
+        <div class="course-body">
+          <h3>Third Eye Activation</h3>
+          <p class="course-hook">Your Third Eye is not a mystery. It is a dormant potential waiting to be awakened.</p>
+          <p class="course-desc">Learn powerful practices to activate intuition, sharpen perception, dissolve mental fog, and experience deeper spiritual awareness.</p>
+          <ul class="course-points">
+            <li>See Beyond Limitations</li>
+            <li>Trust Your Inner Guidance</li>
+            <li>Expand Consciousness</li>
+            <li>Awaken Your Highest Potential</li>
+          </ul>
+          <a href="course.html?course=thirdeye" class="course-cta">Begin Your Transformation</a>
+        </div>
+      </div>
+
+      <div class="course-card" style="--ac:#6bc4c4;">
+        <div class="course-accent"></div>
+        <img src="image2.jpg" alt="7 Chakra Activation" class="course-img">
+        <div class="course-body">
+          <h3>7 Chakra Activation</h3>
+          <p class="course-hook">When your chakras are blocked, life feels heavy. When your chakras are aligned, life begins to flow.</p>
+          <p class="course-desc">This powerful transformational program helps you heal emotional wounds, balance your energy centers, increase confidence, strengthen intuition, and experience deeper inner peace.</p>
+          <ul class="course-points">
+            <li>Heal</li>
+            <li>Balance</li>
+            <li>Activate</li>
+            <li>Transform</li>
+          </ul>
+          <a href="course.html?course=chakra" class="course-cta">Awaken the Energy Within</a>
+        </div>
+      </div>
+
+      <div class="course-card" style="--ac:#5aad8a;">
+        <div class="course-accent"></div>
+        <img src="image4.jpg" alt="Meditation Mastery" class="course-img">
+        <div class="course-body">
+          <h3>Meditation Mastery</h3>
+          <p class="course-hook">When the mind becomes silent, life becomes clear.</p>
+          <p class="course-desc">Discover a powerful system of meditation practices designed to reduce stress, heal emotional wounds, improve focus, enhance self-awareness, and awaken inner peace.</p>
+          <ul class="course-points">
+            <li>Calm the Mind</li>
+            <li>Heal the Heart</li>
+            <li>Awaken Awareness</li>
+            <li>Transform Your Life</li>
+          </ul>
+          <a href="course.html?course=meditation" class="course-cta">Find Peace Within</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 5. TESTIMONIALS -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="sec-head">
+      <div class="sec-kicker">Success Stories</div>
+      <h2 class="font-cormorant">What Our Students Say About Us</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The Inner Awakening Programme completely changed how I see myself. I have more clarity and peace than I ever thought possible."</p>
+        <div class="testi-name">Priya Sharma, Jaipur</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Dr. Rawal has a unique gift of making complex concepts so simple. After the Meditation Mastery course I sleep better, think clearer, and feel lighter."</p>
+        <div class="testi-name">Rahul Verma, Delhi</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"I had been struggling with anxiety for years. The Chakra Activation programme helped me release blocks I did not even know I was carrying."</p>
+        <div class="testi-name">Anita Gupta, Mumbai</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The SUPER HUMAN programme gave me a completely new identity. I went from self-doubt to leading my team with full confidence within a month."</p>
+        <div class="testi-name">Vikram Singh, Pune</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Manifestation finally made sense after this course. The practical tools Dr. Rawal shares are unlike anything else I have tried."</p>
+        <div class="testi-name">Deepa Nair, Bangalore</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Within two weeks of Inner Awakening 2.0 my relationship with my family transformed. I feel calmer, more loving, and more present."</p>
+        <div class="testi-name">Suresh Agarwal, Sikar</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-grid">
+      <div class="about-photo-wrap">
+        <div class="about-photo-frame">
+          <img src="dr-niraj.png" alt="Dr. Niraj Rawal"/>
+        </div>
+        <div class="about-badge"><b>15+</b><span>Years</span></div>
+      </div>
+      <div class="about-text">
+        <div class="sec-kicker" style="text-align:left;">About Dr. Niraj Rawal</div>
+        <h2 class="font-cormorant">A Guide Who Has Walked the Path</h2>
+        <p>For over fifteen years, Dr. Niraj Rawal has guided thousands of people toward clarity, inner peace and lasting transformation. His work brings together neuroscience, psychology, spirituality and consciousness to help people understand, heal and grow.</p>
+        <p>Based in Sikar, Rajasthan, he has trained 12,000+ students across India, earned 25+ certifications and specializations, and created a body of work that transforms lives one mind at a time.</p>
+        <div class="achievements">
+          <div class="ach-item"><span class="ach-num">12,000+</span><span class="ach-label">Students Trained</span></div>
+          <div class="ach-item"><span class="ach-num">25+</span><span class="ach-label">Certifications</span></div>
+          <div class="ach-item"><span class="ach-num">2,000+</span><span class="ach-label">Success Stories</span></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:26px;" id="vcardBtn">Connect with Dr. Rawal</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. WEBINAR CTA -->
+  <section class="webinar-section" id="webinar">
+    <div class="webinar-inner">
+      <div class="webinar-badge">Free · Live · Online</div>
+      <h2>Join Our Free Transformational Webinar</h2>
+      <p>Discover the science and spirit behind inner awakening. Learn practical tools to heal your mind, release limiting patterns, and begin your transformation completely free.</p>
+      <a href="#contact" class="btn btn-webinar btn-lg">Register Now</a>
+    </div>
+  </section>
+
+  <!-- 8. FOOTER -->
+  <footer id="contact">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo-centre.png" alt="Logo" class="footer-logo"/>
+        <strong>Dr. Niraj Rawal</strong>
+        <p>Coach · Meditation Guide · Inner Awakening Mentor</p>
+        <p>First Floor, Shop No. C&amp;D, Bioscope Mall,<br>Rani Sati Road, Sikar, Rajasthan, India</p>
+      </div>
+      <div class="footer-col">
+        <h4>Programmes</h4>
+        <a href="course.html?course=thirdeye">Third Eye Activation</a>
+<a href="course.html?course=chakra">7 Chakra Activation</a>
+<a href="course.html?course=meditation">Meditation Mastery</a>
+<a href="course.html?course=manifestation">Manifestation</a>
+<a href="course.html?course=inner">Inner Awakening 2.0</a>
+<a href="course.html?course=superhuman">SUPER HUMAN</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="tel:09352080871">093520 80871</a>
+        <a href="https://wa.me/919352080871">WhatsApp</a>
+        <a href="https://www.facebook.com/DrNirajRawal07/">Facebook</a>
+        <a href="#webinar">Free Webinar</a>
+        <a href="#contact">Book Consultation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Dr. Niraj Rawal. All rights reserved.</span>
+      <span class="footer-disclaimer">Coaching and meditation offerings support personal growth. Not a substitute for medical or psychological treatment.</span>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+
+<!-- ═══════════ VCARD MODAL ═══════════ -->
+<div class="vcard-overlay" id="vcardOverlay">
+  <div class="vcard-modal" id="vcardModal">
+    <button class="vcard-close" id="vcardClose">&#10005;</button>
+    <div class="vcard-top">
+      <div class="vcard-logo-wrap">
+        <img src="logo-centre.png" alt="Logo" class="vcard-logo"/>
+      </div>
+      <img src="dr-niraj.png" alt="Dr. Niraj Rawal" class="vcard-photo"/>
+      <div class="vcard-name">Dr. Niraj Rawal</div>
+      <div class="vcard-title">Inner Awakening Coach &amp; Mentor</div>
+      <div class="vcard-tagline">Every Problem Has a Solution</div>
+    </div>
+    <div class="vcard-divider"></div>
+    <div class="vcard-details">
+      <div class="vcard-row">
+        <span class="vcard-icon">&#9742;</span>
+        <span>093520 80871</span>
+      </div>
+      <div class="vcard-row">
+        <span class="vcard-icon">&#9993;</span>
+        <span>contact@drnirajrawal.com</span>
+      </div>
+      <div class="vcard-row">
+        <span class="vcard-icon">&#128205;</span>
+        <span>Bioscope Mall, Rani Sati Road, Sikar, Rajasthan</span>
+      </div>
+      <div class="vcard-row">
+        <span class="vcard-icon">&#127760;</span>
+        <span>www.drnirajrawal.com</span>
+      </div>
+    </div>
+    <div class="vcard-specialisms">
+      <span>Neuroscience</span>
+      <span>Meditation</span>
+      <span>Chakra Healing</span>
+      <span>Manifestation</span>
+      <span>Inner Awakening</span>
+    </div>
+    <div class="vcard-actions">
+      <button class="btn btn-primary" id="vcardDownload">Download Card</button>
+      <a href="https://wa.me/919352080871" class="btn btn-outline" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+/* ── loading screen ── */
+const intro   = document.getElementById('intro');
+const page    = document.getElementById('page');
+const nav     = document.getElementById('nav');
+const skipBtn = document.getElementById('skipBtn');
+const pct     = document.getElementById('loaderPct');
+let done = false;
+
+/* ── Skip intro if returning from course page ── */
+if (sessionStorage.getItem('skipIntro')) {
+  done = true;
+  intro.remove();
+  skipBtn.style.display = 'none';
+  document.body.classList.remove('intro-active');
+  page.classList.add('show');
+  nav.classList.add('show');
+} else {
+  let count = 0;
+  const counter = setInterval(() => {
+    count = Math.min(count + Math.ceil(Math.random() * 3 + 1), 100);
+    if (pct) pct.textContent = count + '%';
+    if (count >= 100) clearInterval(counter);
+  }, 200);
+
+  function reveal() {
+    if (done) return; done = true;
+    clearInterval(counter);
+    intro.style.opacity = '0';
+    intro.style.transition = 'opacity 1s ease';
+    skipBtn.style.display = 'none';
+    setTimeout(() => {
+      intro.remove();
+      document.body.classList.remove('intro-active');
+      page.classList.add('show');
+      nav.classList.add('show');
+      sessionStorage.setItem('skipIntro', '1'); // ← set after auto-complete
+    }, 1000);
+  }
+
+  const auto = setTimeout(reveal, 8800);
+  skipBtn.addEventListener('click', () => {
+    clearTimeout(auto);
+    reveal(); // reveal() itself sets the flag, so no need to repeat it here
+  });
+}
+
+
+
+/* ── stat counters (scroll-up slot machine style) ── */
+const statNums = document.querySelectorAll('.stat-num');
+let statsStarted = false;
+
+function startCounters() {
+  if (statsStarted) return;
+  statsStarted = true;
+  statNums.forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const duration = 1600;
+    const fps = 60;
+    const steps = fps * (duration / 1000);
+    let current = 0;
+    let frame = 0;
+    // ease-out curve
+    const tick = () => {
+      frame++;
+      const progress = frame / steps;
+      const eased = 1 - Math.pow(1 - progress, 3);
+      current = Math.round(target * eased);
+      el.textContent = current.toLocaleString('en-IN');
+      if (frame < steps) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString('en-IN');
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
+const statsObs = new IntersectionObserver(e => {
+  if (e[0].isIntersecting) startCounters();
+}, { threshold: 0.3 });
+const statsEl = document.getElementById('stats');
+if (statsEl) statsObs.observe(statsEl);
+
+
+/* ── problems + solutions staggered animation ── */
+const problems  = document.querySelectorAll('#problemsList li');
+const solutions = document.querySelectorAll('#solutionsList li');
+let psStarted = false;
+
+function startPS() {
+  if (psStarted) return;
+  psStarted = true;
+  problems.forEach((li, i) => {
+    setTimeout(() => {
+      li.classList.add('ps-visible');
+      // matching solution
+      if (solutions[i]) solutions[i].classList.add('ps-visible');
+    }, i * 220);
+  });
+}
+
+const psObs = new IntersectionObserver(e => {
+  if (e[0].isIntersecting) startPS();
+}, { threshold: 0.2 });
+const psEl = document.querySelector('.ps-section');
+if (psEl) psObs.observe(psEl);
+
+
+/* ── vCard modal ── */
+const vcardOverlay = document.getElementById('vcardOverlay');
+const vcardModal   = document.getElementById('vcardModal');
+const vcardBtn     = document.getElementById('vcardBtn');
+const vcardClose   = document.getElementById('vcardClose');
+
+vcardBtn.addEventListener('click', () => {
+  vcardOverlay.classList.add('open');
+});
+vcardClose.addEventListener('click', () => {
+  vcardOverlay.classList.remove('open');
+});
+vcardOverlay.addEventListener('click', e => {
+  if (e.target === vcardOverlay) vcardOverlay.classList.remove('open');
+});
+
+/* download vCard as .vcf */
+document.getElementById('vcardDownload').addEventListener('click', () => {
+  const vcf = `BEGIN:VCARD
+VERSION:3.0
+FN:Dr. Niraj Rawal
+TITLE:Inner Awakening Coach & Mentor
+TEL:+919352080871
+EMAIL:contact@drnirajrawal.com
+ADR:;;Bioscope Mall, Rani Sati Road;Sikar;Rajasthan;332001;India
+URL:www.drnirajrawal.com
+NOTE:Every Problem Has a Solution
+END:VCARD`;
+  const blob = new Blob([vcf], { type: 'text/vcard' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Dr-Niraj-Rawal.vcf';
+  a.click();
+});
+</script>
+</body>
+</html>
