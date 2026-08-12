@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>My Courses — Dr. Niraj Rawal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   COURSE LIBRARY — matches the main site's palette:
+   deep blue #1F2A5A, mid blue #3f6bc4, sky tints,
+   warm gold accent. Light background throughout.
+   ═══════════════════════════════════════════════ */
+:root{
+  --navy:#1F2A5A;
+  --blue:#3f6bc4;
+  --blue-soft:#6d93e0;
+  --sky:#eef3fc;
+  --sky2:#f6f9fe;
+  --gold:#c9a45c;
+  --paper:#ffffff;
+  --ink:#1a1f36;
+  --ink-muted:#5b6178;
+  --line:rgba(31,42,90,.10);
+  --ok:#1c8a4b;
+  --err:#c0392b;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;}
+body{
+  background:var(--sky2);
+  font-family:'Instrument Sans', sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque', sans-serif; margin:0;}
+a{color:inherit;}
+button{font-family:inherit;}
+
+/* ── top bar ── */
+.cl-topbar{
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px clamp(16px,4vw,40px);
+}
+.cl-brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+.cl-brand img{height:36px;width:36px;object-fit:contain;flex:none;}
+.cl-brand strong{display:block;font-size:14px;color:var(--navy);font-weight:700;}
+.cl-brand span{display:block;font-size:11px;color:var(--blue);letter-spacing:.05em;text-transform:uppercase;}
+.cl-top-right{display:flex;align-items:center;gap:18px;}
+.cl-back-link{font-size:13px;color:var(--ink-muted);text-decoration:none;display:flex;align-items:center;gap:5px;}
+.cl-back-link:hover{color:var(--blue);}
+.cl-login-link{font-size:13px;font-weight:700;color:var(--blue);text-decoration:none;cursor:pointer;background:none;border:none;font-family:inherit;}
+.cl-user-chip{
+  display:none; align-items:center; gap:9px;
+  background:var(--sky); border:1px solid var(--line); border-radius:30px;
+  padding:5px 14px 5px 5px; font-size:13px; cursor:default;
+}
+.cl-user-chip.show{display:flex;}
+.cl-user-avatar{
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--navy));
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;flex:none;
+}
+.cl-logout-btn{background:none;border:none;color:var(--ink-muted);font-size:12px;cursor:pointer;text-decoration:underline;padding:0;}
+.cl-logout-btn:hover{color:var(--err);}
+
+.cl-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,40px) 80px;}
+
+/* ── page header ── */
+.cl-page-head{ text-align:center; padding:52px 0 40px; }
+.cl-kicker{
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--blue); font-size:12px; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; margin-bottom:12px;
+}
+.cl-kicker svg{width:16px;height:16px;}
+.cl-page-head h1{font-size:clamp(28px,4.4vw,42px);color:var(--navy);margin-bottom:10px;line-height:1.15;}
+.cl-page-head p{color:var(--ink-muted);font-size:15px;max-width:560px;margin:0 auto;line-height:1.6;}
+
+/* ── catalog grid ── */
+.cl-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:24px;
+}
+@media(max-width:920px){ .cl-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:620px){ .cl-grid{grid-template-columns:1fr;} }
+
+.cl-card{
+  background:var(--paper); border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; cursor:pointer; text-align:left;
+  box-shadow:0 10px 30px rgba(31,42,90,.06);
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.cl-card:hover{ transform:translateY(-4px); box-shadow:0 18px 44px rgba(31,42,90,.14); border-color:rgba(63,107,196,.3); }
+
+.cl-thumb{
+  position:relative; aspect-ratio:16/9; overflow:hidden;
+  background:var(--ac-bg, linear-gradient(135deg,#3f6bc4,#1F2A5A));
+  display:flex; align-items:center; justify-content:center;
+}
+.cl-thumb svg.cl-thumb-icon{ width:52px; height:52px; color:rgba(255,255,255,.4); }
+.cl-thumb-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+.cl-thumb-scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg, rgba(0,0,0,.05) 40%, rgba(0,0,0,.55) 100%);
+}
+.cl-lock-badge{
+  position:absolute; top:12px; right:12px; z-index:2;
+  display:flex; align-items:center; gap:6px;
+  background:rgba(10,14,32,.68); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:30px; padding:6px 12px 6px 8px;
+  font-size:12px; font-weight:700; color:#fff;
+}
+.cl-lock-badge svg{width:13px;height:13px;flex:none;}
+.cl-lock-badge.unlocked{ background:rgba(28,138,75,.85); border-color:rgba(255,255,255,.3); }
+
+.cl-lock-center{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2;
+  width:56px; height:56px; border-radius:50%;
+  background:rgba(255,255,255,.14); border:1.5px solid rgba(255,255,255,.5);
+  backdrop-filter:blur(3px);
+  display:flex; align-items:center; justify-content:center;
+}
+.cl-lock-center svg{width:22px;height:22px;color:#fff;}
+.cl-card:hover .cl-lock-center{ background:rgba(255,255,255,.24); }
+
+.cl-thumb-meta{
+  position:absolute; left:12px; bottom:10px; z-index:2;
+  font-size:11.5px; color:rgba(255,255,255,.9); font-weight:600;
+  display:flex; align-items:center; gap:6px;
+}
+
+.cl-card-body{ padding:18px 18px 20px; }
+.cl-card-title{ font-size:16.5px; font-weight:700; color:var(--navy); margin-bottom:6px; line-height:1.3; }
+.cl-card-desc{ font-size:13px; color:var(--ink-muted); line-height:1.6; margin-bottom:14px; min-height:42px; }
+.cl-card-foot{ display:flex; align-items:center; justify-content:space-between; padding-top:14px; border-top:1px solid var(--line); }
+.cl-price{ font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:16px; color:var(--navy); }
+.cl-price span{ font-size:10.5px; font-weight:600; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.05em; display:block; margin-top:1px;}
+.cl-price.owned{ color:var(--ok); }
+.cl-view-link{ font-size:12.5px; font-weight:700; color:var(--blue); display:flex; align-items:center; gap:4px; }
+
+/* ── course detail page ── */
+.cl-detail{ display:none; }
+.cl-back-btn{
+  display:inline-flex; align-items:center; gap:6px; margin:28px 0 8px;
+  background:none; border:none; color:var(--ink-muted); font-size:13px; cursor:pointer; padding:0;
+}
+.cl-back-btn:hover{ color:var(--blue); }
+
+.cl-detail-hero{
+  display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:start;
+  padding:30px 0 40px; border-bottom:1px solid var(--line); margin-bottom:32px;
+}
+@media(max-width:800px){ .cl-detail-hero{grid-template-columns:1fr;} }
+
+.cl-detail-video{
+  position:relative; aspect-ratio:16/9; border-radius:16px; overflow:hidden;
+  background:var(--ac-bg, linear-gradient(135deg,#3f6bc4,#1F2A5A));
+  box-shadow:0 16px 40px rgba(31,42,90,.14);
+}
+.cl-detail-video iframe{ position:absolute; inset:0; width:100%; height:100%; border:none; }
+.cl-detail-video-lock{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  background:rgba(10,14,32,.42); backdrop-filter:blur(2px);
+  color:#fff; text-align:center; padding:20px;
+}
+.cl-detail-video-lock .ring{
+  width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.14);
+  border:1.5px solid rgba(255,255,255,.5); display:flex;align-items:center;justify-content:center;
+}
+.cl-detail-video-lock .ring svg{width:24px;height:24px;}
+.cl-detail-video-lock p{font-size:13px;color:rgba(255,255,255,.85);max-width:260px;line-height:1.5;}
+.cl-detail-video-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+.cl-detail-video-play{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3;
+  width:64px; height:64px; border-radius:50%;
+  background:rgba(255,255,255,.92); border:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  transition:transform .25s;
+}
+.cl-detail-video-play:hover{ transform:translate(-50%,-50%) scale(1.08); }
+.cl-detail-video-play svg{ width:22px; height:22px; color:var(--navy); margin-left:3px; }
+
+.cl-detail-side{}
+.cl-tag{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--ac, var(--blue)); background:var(--ac-tint, var(--sky)); border-radius:20px; padding:5px 12px; margin-bottom:12px; }
+.cl-detail-side h1{ font-size:clamp(24px,3.2vw,32px); color:var(--navy); line-height:1.2; margin-bottom:10px; }
+.cl-detail-side .desc{ font-size:14.5px; color:var(--ink-muted); line-height:1.7; margin-bottom:20px; }
+.cl-detail-stats{ display:flex; gap:22px; margin-bottom:22px; }
+.cl-detail-stat b{ display:block; font-family:'Bricolage Grotesque',sans-serif; font-size:18px; color:var(--navy); }
+.cl-detail-stat span{ font-size:11px; color:var(--ink-muted); text-transform:uppercase; letter-spacing:.05em; }
+
+.cl-unlock-box{
+  background:var(--paper); border:1.5px solid var(--line); border-radius:16px; padding:22px;
+  box-shadow:0 12px 30px rgba(31,42,90,.08);
+}
+.cl-unlock-box.owned{ border-color:rgba(28,138,75,.35); background:#f3fbf6; }
+.cl-unlock-price-row{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px; }
+.cl-unlock-price-row b{ font-family:'Bricolage Grotesque',sans-serif; font-size:26px; color:var(--navy); }
+.cl-unlock-price-row span{ font-size:12px; color:var(--ink-muted); }
+.cl-uf{ display:flex; flex-direction:column; gap:10px; margin-bottom:12px; }
+.cl-uf input{
+  width:100%; padding:11px 13px; border:1.5px solid var(--line); border-radius:9px;
+  font-size:14px; font-family:'Instrument Sans',sans-serif; outline:none; color:var(--ink);
+}
+.cl-uf input:focus{ border-color:var(--blue); }
+.cl-unlock-btn{
+  width:100%; padding:14px; border:none; border-radius:10px; cursor:pointer;
+  background:linear-gradient(135deg,var(--blue),var(--navy)); color:#fff;
+  font-size:14.5px; font-weight:700; font-family:'Bricolage Grotesque',sans-serif;
+  letter-spacing:.02em; transition:.2s;
+}
+.cl-unlock-btn:hover{ transform:translateY(-1px); box-shadow:0 10px 24px rgba(63,107,196,.35); }
+.cl-unlock-btn:disabled{ background:#c8cede; cursor:not-allowed; transform:none; box-shadow:none; }
+.cl-unlock-note{ font-size:11.5px; color:var(--ink-muted); text-align:center; margin-top:10px; line-height:1.5; }
+.cl-unlock-note button{ background:none;border:none;color:var(--blue);font-weight:700;font-size:11.5px;cursor:pointer;padding:0;text-decoration:underline; }
+.cl-banner{ border-radius:8px; padding:9px 12px; font-size:12.5px; margin-bottom:12px; display:none; }
+.cl-banner.show{display:block;}
+.cl-banner-err{ background:#fff5f5; border:1px solid #fecaca; color:var(--err); }
+
+/* ── module list ── */
+.cl-mod-section h3{ font-size:18px; color:var(--navy); margin-bottom:16px; }
+.cl-mod-row{
+  display:flex; align-items:center; gap:16px; padding:14px 16px;
+  border:1px solid var(--line); border-radius:12px; margin-bottom:10px; background:var(--paper);
+  cursor:pointer; transition:border-color .2s, background .2s;
+}
+.cl-mod-row:hover{ border-color:rgba(63,107,196,.35); background:var(--sky2); }
+.cl-mod-num{
+  width:34px; height:34px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  font-size:12.5px; font-weight:700; color:var(--blue); background:var(--sky);
+}
+.cl-mod-row.playable .cl-mod-num{ background:var(--ok); color:#fff; }
+.cl-mod-info{ flex:1; min-width:0; }
+.cl-mod-info .t{ font-size:14.5px; font-weight:700; color:var(--navy); margin-bottom:2px; }
+.cl-mod-info .d{ font-size:12.5px; color:var(--ink-muted); }
+.cl-mod-dur{ font-size:12px; color:var(--ink-muted); white-space:nowrap; }
+.cl-mod-state{ width:30px; height:30px; border-radius:50%; flex:none; display:flex; align-items:center; justify-content:center; background:var(--sky); color:var(--blue); }
+.cl-mod-row.playable .cl-mod-state{ background:var(--blue); color:#fff; }
+.cl-mod-state svg{ width:14px; height:14px; }
+
+.cl-player-wrap{ border-radius:14px; overflow:hidden; margin-bottom:10px; background:#000; border:1px solid var(--line); }
+.cl-player-wrap iframe{ display:block; width:100%; height:320px; border:none; }
+.cl-player-info{ padding:12px 16px; background:var(--sky2); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.cl-player-info .t{ font-size:13.5px; font-weight:700; color:var(--navy); }
+.cl-player-close{ background:none; border:none; color:var(--ink-muted); font-size:12px; cursor:pointer; }
+.cl-player-close:hover{ color:var(--err); }
+
+/* ── login panel (inline overlay) ── */
+.cl-login-overlay{
+  position:fixed; inset:0; z-index:300; background:rgba(20,24,44,.45); backdrop-filter:blur(4px);
+  display:flex; align-items:center; justify-content:center; padding:20px;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.cl-login-overlay.open{ opacity:1; pointer-events:all; }
+.cl-login-card{
+  background:#fff; border-radius:18px; max-width:380px; width:100%; padding:28px;
+  box-shadow:0 30px 70px rgba(0,0,0,.25); transform:translateY(16px); transition:transform .3s;
+}
+.cl-login-overlay.open .cl-login-card{ transform:translateY(0); }
+.cl-login-card h2{ font-size:19px; color:var(--navy); margin-bottom:4px; }
+.cl-login-card p.sub{ font-size:12.5px; color:var(--ink-muted); margin-bottom:18px; }
+.cl-login-close{ float:right; background:none;border:none;font-size:18px;color:var(--ink-muted);cursor:pointer; }
+
+.cl-empty{ text-align:center; padding:60px 20px; color:var(--ink-muted); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOP BAR ═══════════ -->
+<div class="cl-topbar">
+  <a href="index.html" class="cl-brand"><!-- ⚠ update "index.html" to your actual homepage filename if different -->
+    <img src="logo-centre.png" alt="Logo"/>
+    <div>
+      <strong>Dr. Niraj Rawal</strong>
+      <span>Course Library</span>
+    </div>
+  </a>
+  <div class="cl-top-right">
+    <a href="index.html" class="cl-back-link"><!-- ⚠ same here — match your homepage filename -->
+      ← Back to site
+    </a>
+    <button class="cl-login-link" id="clOpenLogin">Log in</button>
+    <div class="cl-user-chip" id="clUserChip">
+      <div class="cl-user-avatar" id="clUserAvatar">?</div>
+      <span id="clUserName">—</span>
+      <button class="cl-logout-btn" id="clLogoutBtn">Log out</button>
+    </div>
+  </div>
+</div>
+
+<div class="cl-wrap">
+
+  <!-- ═══════════ CATALOG VIEW ═══════════ -->
+  <div id="clCatalogView">
+    <div class="cl-page-head">
+      <div class="cl-kicker">
+        <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><path d="M50 60 C30 55 20 40 22 22 C38 26 48 38 50 55 C52 38 62 26 78 22 C80 40 70 55 50 60Z"/></svg>
+        Course Library
+      </div>
+      <h1>Your Path to Inner Transformation</h1>
+      <p>Every programme below includes video modules guided personally by Dr. Niraj Rawal. Preview any course, then unlock it to start watching instantly.</p>
+    </div>
+    <div class="cl-grid" id="clGrid"></div>
+  </div>
+
+  <!-- ═══════════ COURSE DETAIL VIEW ═══════════ -->
+  <div id="clDetailView" class="cl-detail">
+    <button class="cl-back-btn" id="clBackToGrid">← All courses</button>
+
+    <div class="cl-detail-hero">
+      <div class="cl-detail-video" id="clDetailVideoWrap"></div>
+      <div class="cl-detail-side">
+        <span class="cl-tag" id="clDetailTag">Programme</span>
+        <h1 id="clDetailTitle">Course title</h1>
+        <p class="desc" id="clDetailDesc">Course description.</p>
+        <div class="cl-detail-stats">
+          <div class="cl-detail-stat"><b id="clDetailModCount">0</b><span>Modules</span></div>
+          <div class="cl-detail-stat"><b id="clDetailDuration">0</b><span>Minutes</span></div>
+          <div class="cl-detail-stat"><b>Hindi</b><span>Language</span></div>
+        </div>
+
+        <div class="cl-unlock-box" id="clUnlockBox">
+          <div class="cl-banner cl-banner-err" id="clUnlockErr">Something went wrong. Please try again.</div>
+          <div class="cl-unlock-price-row">
+            <b id="clUnlockPrice">₹0</b>
+            <span>one-time unlock</span>
+          </div>
+          <div class="cl-uf">
+            <input type="text" id="clName" placeholder="Full name"/>
+            <input type="email" id="clEmail" placeholder="Email address"/>
+            <input type="tel" id="clPhone" placeholder="WhatsApp number"/>
+          </div>
+          <button class="cl-unlock-btn" id="clUnlockBtn">Unlock This Course →</button>
+          <p class="cl-unlock-note">Already unlocked a course? <button id="clInlineLogin">Log in</button> instead.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cl-mod-section">
+      <h3>Course Modules</h3>
+      <div id="clModuleList"></div>
+    </div>
+  </div>
+
+</div><!-- /cl-wrap -->
+
+<!-- ═══════════ LOGIN OVERLAY ═══════════ -->
+<div class="cl-login-overlay" id="clLoginOverlay">
+  <div class="cl-login-card">
+    <button class="cl-login-close" id="clLoginClose">&times;</button>
+    <h2>Log In</h2>
+    <p class="sub">Use the email and password sent to you after your first purchase.</p>
+    <div class="cl-banner cl-banner-err" id="clLoginErr">Incorrect email or password.</div>
+    <div class="cl-uf">
+      <input type="email" id="clLoginEmail" placeholder="Email address"/>
+      <input type="password" id="clLoginPassword" placeholder="Password"/>
+    </div>
+    <button class="cl-unlock-btn" id="clLoginBtn" style="margin-top:12px;">Log In →</button>
+    <p class="cl-unlock-note">Forgot your password? <a href="https://wa.me/919352080871" style="color:var(--blue);text-decoration:underline;">Message us on WhatsApp</a>.</p>
+  </div>
+</div>
+
+<!-- ═══════════ RAZORPAY + EMAILJS SDKs ═══════════ -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   ①  CONFIGURATION — edit before going live
+   ════════════════════════════════════════════════════════════ */
+var RAZORPAY_KEY_ID = 'rzp_test_TNf53ZxWbrVOIj'; // ← test key, swap to rzp_live_... before going live
+
+var EMAILJS_PUBLIC_KEY = 'mzTM1bsRHhVuLFNQR';
+var EMAILJS_SERVICE_ID = 'service_e0ochtq';
+var EMAILJS_CREDENTIALS_TEMPLATE_ID = 'template_smj85il';
+/* Template needs: {{to_name}} {{to_email}} {{login_email}} {{login_password}} {{course_name}} {{portal_url}} */
+
+var PORTAL_URL = window.location.href.split('?')[0];
+
+/* ⚠ Same note as before: accounts live in this browser's localStorage
+   only (no cross-device sync), and the Razorpay success callback below
+   is trusted client-side. For real payments, verify the signature with
+   a small backend before granting access. This is a complete working
+   prototype of the full flow. */
+
+/* ════════════════════════════════════════════════════════════
+   ②  COURSE CATALOG
+   ════════════════════════════════════════════════════════════ */
+var COURSES = {
+  thirdeye: {
+    name:'Third Eye Activation', tag:'Awareness', price:1999, accent:'#6d93e0', tint:'#eef3fc',
+    poster:'eyeunlock.png',
+    desc:'Open the subtle centre of intuition and perception through guided, practical activation work.',
+    modules:[
+      {title:'Understanding the Third Eye', duration:'18 min', youtubeId:'YOUTUBE_ID_THIRDEYE_M1', desc:'The science and subtle anatomy behind the third eye centre.'},
+      {title:'Activation Practices', duration:'24 min', youtubeId:'YOUTUBE_ID_THIRDEYE_M2', desc:'Guided practices to begin activating intuitive perception.'},
+      {title:'Daily Intuition Rituals', duration:'20 min', youtubeId:'YOUTUBE_ID_THIRDEYE_M3', desc:'Simple daily habits that keep the third eye centre open.'},
+      {title:'Integration & Next Steps', duration:'15 min', youtubeId:'YOUTUBE_ID_THIRDEYE_M4', desc:'Bringing your new awareness into everyday decisions.'}
+    ]
+  },
+  chakra:{
+    name:'7 Chakra Activation', tag:'Energy Work', price:2499, accent:'#4fb3a9', tint:'#eafaf7',
+    poster:'chakraunlock.png',
+    desc:'A complete walkthrough of the seven energy centres, with healing practices for each one.',
+    modules:[
+      {title:'Mapping Your 7 Chakras', duration:'20 min', youtubeId:'YOUTUBE_ID_CHAKRA_M1', desc:'A full walkthrough of the seven energy centres and what each governs.'},
+      {title:'Root & Sacral Healing', duration:'23 min', youtubeId:'YOUTUBE_ID_CHAKRA_M2', desc:'Releasing blocks tied to safety, security and creativity.'},
+      {title:'Heart & Throat Opening', duration:'22 min', youtubeId:'YOUTUBE_ID_CHAKRA_M3', desc:'Practices for love, connection and honest self-expression.'},
+      {title:'Third Eye & Crown Alignment', duration:'21 min', youtubeId:'YOUTUBE_ID_CHAKRA_M4', desc:'Higher awareness and connection to something greater than yourself.'},
+      {title:'Full-System Balancing', duration:'26 min', youtubeId:'YOUTUBE_ID_CHAKRA_M5', desc:'Bringing all seven centres into one balanced, flowing system.'}
+    ]
+  },
+  meditation:{
+    name:'Meditation Mastery', tag:'Foundations', price:1499, accent:'#5aad8a', tint:'#eef8f2',
+    poster:'meditationunlock.png',
+    desc:'A beginner-friendly path from a restless mind to real, sustainable daily stillness.',
+    modules:[
+      {title:'Why the Mind Resists Stillness', duration:'16 min', youtubeId:'YOUTUBE_ID_MEDITATION_M1', desc:'Understanding the mental habits that make meditation feel hard.'},
+      {title:'Breath as an Anchor', duration:'19 min', youtubeId:'YOUTUBE_ID_MEDITATION_M2', desc:'Foundational breath-based techniques for beginners.'},
+      {title:'Guided Deep Meditation', duration:'30 min', youtubeId:'YOUTUBE_ID_MEDITATION_M3', desc:'A full guided session to experience real stillness.'},
+      {title:'Building a Daily Practice', duration:'14 min', youtubeId:'YOUTUBE_ID_MEDITATION_M4', desc:'Turning meditation into a habit that actually sticks.'}
+    ]
+  },
+  manifestation:{
+    name:'Manifestation & Abundant Life', tag:'Abundance', price:2999, accent:'#c9a45c', tint:'#faf4e8',
+    poster:'manifestationunlock.png',
+    desc:'Rewire the subconscious beliefs quietly shaping what you attract into your life.',
+    modules:[
+      {title:'How Beliefs Shape Reality', duration:'21 min', youtubeId:'YOUTUBE_ID_MANIFEST_M1', desc:'The link between subconscious beliefs and what you attract.'},
+      {title:'Rewiring Limiting Beliefs', duration:'25 min', youtubeId:'YOUTUBE_ID_MANIFEST_M2', desc:'A practical process for identifying and replacing old patterns.'},
+      {title:'The Abundance Practice', duration:'22 min', youtubeId:'YOUTUBE_ID_MANIFEST_M3', desc:'Daily exercises to raise your baseline energy around money and opportunity.'},
+      {title:'Aligned Action', duration:'18 min', youtubeId:'YOUTUBE_ID_MANIFEST_M4', desc:'Why manifestation still needs real-world action, and how to take it.'}
+    ]
+  },
+  inner:{
+    name:'Inner Awakening Programme 2.0', tag:'Flagship', price:4999, accent:'#3f6bc4', tint:'#eef3fc',
+    poster:'innerunlock.png',
+    desc:'Our most complete transformational journey — healing, subconscious work, and full alignment.',
+    modules:[
+      {title:'Meeting Your Inner Self', duration:'24 min', youtubeId:'YOUTUBE_ID_INNER_M1', desc:'Starting the journey inward with honest self-observation.'},
+      {title:'Healing Emotional Pain', duration:'28 min', youtubeId:'YOUTUBE_ID_INNER_M2', desc:'Working directly with stored emotional pain and old wounds.'},
+      {title:'Releasing Limiting Patterns', duration:'26 min', youtubeId:'YOUTUBE_ID_INNER_M3', desc:'Identifying the patterns quietly running your decisions.'},
+      {title:'Awakening Inner Power', duration:'27 min', youtubeId:'YOUTUBE_ID_INNER_M4', desc:'Reconnecting with your own capability and inner authority.'},
+      {title:'Full Alignment', duration:'30 min', youtubeId:'YOUTUBE_ID_INNER_M5', desc:'Bringing mind, body, soul and energy into one direction.'}
+    ]
+  },
+  superhuman:{
+    name:'SUPER HUMAN', tag:'Advanced', price:9999, accent:'#b8863f', tint:'#faf4e8',
+    poster:'humanunlock.png',
+    desc:'An advanced identity and consciousness programme for those ready to go all in.',
+    modules:[
+      {title:'Installing Your Alpha Identity', duration:'29 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M1', desc:'Rebuilding self-identity at the subconscious level.'},
+      {title:'Mind & Energy Mastery', duration:'31 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M2', desc:'Advanced techniques for directing focus and personal energy.'},
+      {title:'Manifesting Your Dream Reality', duration:'27 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M3', desc:'Applying manifestation principles at an accelerated level.'},
+      {title:'Activating Higher Consciousness', duration:'33 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M4', desc:'Expanding awareness beyond everyday limitations.'},
+      {title:'Living as SUPER HUMAN', duration:'25 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M5', desc:'Integrating everything into a sustained, elevated way of living.'}
+    ]
+  },
+  fear:{
+    name:'Fear to Courage', tag:'Healing', price:3499, accent:'#c46a5e', tint:'#fbeeec',
+    poster:'fearunlock.png',
+    desc:'Trace fear back to its root and build real, practiced courage in its place.',
+    modules:[
+      {title:'The Root Cause of Fear', duration:'20 min', youtubeId:'YOUTUBE_ID_FEAR_M1', desc:'How early experiences quietly install fear as a habit, then an identity.'},
+      {title:'Fear of Rejection', duration:'18 min', youtubeId:'YOUTUBE_ID_FEAR_M2', desc:'Why you shrink your opinions and let others decide for you, and how to stop.'},
+      {title:'Fear of Failure', duration:'19 min', youtubeId:'YOUTUBE_ID_FEAR_M3', desc:'Turning "not yet" into real action, one small step at a time.'},
+      {title:'Fear of Loss & Not Being Enough', duration:'22 min', youtubeId:'YOUTUBE_ID_FEAR_M4', desc:'Loosening the grip of control, and finally seeing your own value.'},
+      {title:'Fear of Uncertainty & Building Courage', duration:'24 min', youtubeId:'YOUTUBE_ID_FEAR_M5', desc:'A practical framework for decisions, plus daily courage-building practices.'}
+    ]
+  }
+};
+
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+/* ════════════════════════════════════════════════════════════
+   ③  LOCAL ACCOUNT HELPERS (localStorage-based, browser-only)
+   ════════════════════════════════════════════════════════════ */
+function clGetUsers(){ try{ return JSON.parse(localStorage.getItem('cl_users')||'{}'); }catch(e){ return {}; } }
+function clSaveUsers(u){ localStorage.setItem('cl_users', JSON.stringify(u)); }
+function clGetSession(){ return localStorage.getItem('cl_session')||null; }
+function clSetSession(email){ localStorage.setItem('cl_session', email); }
+function clClearSession(){ localStorage.removeItem('cl_session'); }
+function clGeneratePassword(){
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789', out='';
+  var arr=new Uint32Array(10); (window.crypto||window.msCrypto).getRandomValues(arr);
+  for(var i=0;i<10;i++) out+=chars[arr[i]%chars.length];
+  return out;
+}
+function clCurrentRecord(){
+  var email = clGetSession();
+  if(!email) return null;
+  var users = clGetUsers();
+  return users[email] ? Object.assign({email:email}, users[email]) : null;
+}
+function clOwnsCourse(key){
+  var rec = clCurrentRecord();
+  return !!(rec && rec.courses && rec.courses.indexOf(key) !== -1);
+}
+
+/* icon used on every thumbnail + lock badge (brand lotus mark) */
+var LOTUS_ICON = '<path d="M50 60 C30 55 20 40 22 22 C38 26 48 38 50 55 C52 38 62 26 78 22 C80 40 70 55 50 60Z"/><path d="M50 60 C40 50 38 35 45 20 C52 35 52 50 50 60Z"/><path d="M50 60 C60 50 62 35 55 20 C48 35 48 50 50 60Z"/>';
+var LOCK_ICON = '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/>';
+var CHECK_ICON = '<path d="M4 10l4 4 8-8"/>';
+var PLAY_ICON = '<path d="M6 4l10 6-10 6V4z"/>';
+
+/* ════════════════════════════════════════════════════════════
+   ④  RENDER: CATALOG
+   ════════════════════════════════════════════════════════════ */
+var grid = document.getElementById('clGrid');
+
+function renderCatalog(){
+  grid.innerHTML = '';
+  Object.keys(COURSES).forEach(function(key){
+    var c = COURSES[key];
+    var owned = clOwnsCourse(key);
+    var totalMin = c.modules.reduce(function(s,m){ return s + parseInt(m.duration); }, 0);
+
+    var card = document.createElement('div');
+    card.className = 'cl-card';
+    card.innerHTML =
+      '<div class="cl-thumb" style="--ac-bg:linear-gradient(135deg,'+c.accent+',#1F2A5A);">' +
+        (c.poster ? '<img class="cl-thumb-img" src="'+c.poster+'" alt="'+c.name+'">' : '<svg class="cl-thumb-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">'+LOTUS_ICON+'</svg>') +
+        '<div class="cl-thumb-scrim"></div>' +
+        '<div class="cl-lock-badge'+(owned?' unlocked':'')+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(owned?CHECK_ICON:LOCK_ICON)+'</svg>'+(owned?'Unlocked':'₹'+c.price.toLocaleString('en-IN'))+'</div>' +
+        '<div class="cl-lock-center"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(owned?PLAY_ICON:LOCK_ICON)+'</svg></div>' +
+        '<div class="cl-thumb-meta">'+c.modules.length+' modules · '+totalMin+' min</div>' +
+      '</div>' +
+      '<div class="cl-card-body">' +
+        '<div class="cl-card-title">'+c.name+'</div>' +
+        '<div class="cl-card-desc">'+c.desc+'</div>' +
+        '<div class="cl-card-foot">' +
+          '<div class="cl-price'+(owned?' owned':'')+'">'+(owned?'Owned<span>Ready to watch</span>':'₹'+c.price.toLocaleString('en-IN')+'<span>To unlock</span>')+'</div>' +
+          '<div class="cl-view-link">Course details →</div>' +
+        '</div>' +
+      '</div>';
+    card.addEventListener('click', function(){ openDetail(key); });
+    grid.appendChild(card);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   ⑤  RENDER: COURSE DETAIL
+   ════════════════════════════════════════════════════════════ */
+var catalogView = document.getElementById('clCatalogView');
+var detailView = document.getElementById('clDetailView');
+var currentDetailKey = null;
+
+function openDetail(key){
+  currentDetailKey = key;
+  var c = COURSES[key];
+  var owned = clOwnsCourse(key);
+  var totalMin = c.modules.reduce(function(s,m){ return s + parseInt(m.duration); }, 0);
+
+  document.getElementById('clDetailTag').textContent = c.tag;
+  document.getElementById('clDetailTag').style.setProperty('--ac', c.accent);
+  document.getElementById('clDetailTag').style.setProperty('--ac-tint', c.tint);
+  document.getElementById('clDetailTitle').textContent = c.name;
+  document.getElementById('clDetailDesc').textContent = c.desc;
+  document.getElementById('clDetailModCount').textContent = c.modules.length;
+  document.getElementById('clDetailDuration').textContent = totalMin;
+  document.getElementById('clUnlockPrice').textContent = '₹'+c.price.toLocaleString('en-IN');
+
+  var videoWrap = document.getElementById('clDetailVideoWrap');
+  videoWrap.style.setProperty('--ac-bg', 'linear-gradient(135deg,'+c.accent+',#1F2A5A)');
+  var posterImg = c.poster
+    ? '<img class="cl-detail-video-img" src="'+c.poster+'" alt="'+c.name+'">'
+    : '<svg class="cl-thumb-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;color:rgba(255,255,255,.28);">'+LOTUS_ICON+'</svg>';
+
+  if(owned){
+    videoWrap.innerHTML =
+      posterImg +
+      '<div class="cl-thumb-scrim"></div>' +
+      '<button class="cl-detail-video-play" id="clHeroPlay"><svg viewBox="0 0 24 24" fill="currentColor">'+PLAY_ICON+'</svg></button>';
+    document.getElementById('clHeroPlay').addEventListener('click', function(){
+      videoWrap.innerHTML = '<iframe src="https://www.youtube.com/embed/'+c.modules[0].youtubeId+'?autoplay=1" title="'+c.name+'" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+    });
+  } else {
+    videoWrap.innerHTML =
+      posterImg +
+      '<div class="cl-detail-video-lock">' +
+        '<div class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+LOCK_ICON+'</svg></div>' +
+        '<p>Unlock this course to watch the full preview and all modules instantly.</p>' +
+      '</div>';
+  }
+
+  var box = document.getElementById('clUnlockBox');
+  box.classList.toggle('owned', owned);
+  box.innerHTML = owned
+    ? '<div style="display:flex;align-items:center;gap:10px;color:var(--ok);font-weight:700;font-size:15px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+CHECK_ICON+'</svg> You own this course</div><p style="font-size:12.5px;color:var(--ink-muted);margin-top:8px;line-height:1.6;">Scroll down to start watching any module.</p>'
+    : '<div class="cl-banner cl-banner-err" id="clUnlockErr">Something went wrong. Please try again.</div>' +
+      '<div class="cl-unlock-price-row"><b>₹'+c.price.toLocaleString('en-IN')+'</b><span>one-time unlock</span></div>' +
+      '<div class="cl-uf">' +
+        '<input type="text" id="clName" placeholder="Full name"/>' +
+        '<input type="email" id="clEmail" placeholder="Email address"/>' +
+        '<input type="tel" id="clPhone" placeholder="WhatsApp number"/>' +
+      '</div>' +
+      '<button class="cl-unlock-btn" id="clUnlockBtn">Unlock This Course →</button>' +
+      '<p class="cl-unlock-note">Already unlocked a course? <button id="clInlineLogin">Log in</button> instead.</p>';
+
+  if(!owned){
+    document.getElementById('clUnlockBtn').addEventListener('click', function(){ startCheckout(key); });
+    document.getElementById('clInlineLogin').addEventListener('click', openLogin);
+  }
+
+  renderModuleList(key, owned);
+
+  catalogView.style.display = 'none';
+  detailView.style.display = 'block';
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+function backToCatalog(){
+  detailView.style.display = 'none';
+  catalogView.style.display = 'block';
+  renderCatalog();
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+document.getElementById('clBackToGrid').addEventListener('click', backToCatalog);
+
+function renderModuleList(key, owned){
+  var c = COURSES[key];
+  var wrap = document.getElementById('clModuleList');
+  wrap.innerHTML = '';
+  c.modules.forEach(function(mod, i){
+    var row = document.createElement('div');
+    row.className = 'cl-mod-row' + (owned ? ' playable' : '');
+    row.innerHTML =
+      '<div class="cl-mod-num">'+(i+1)+'</div>' +
+      '<div class="cl-mod-info"><div class="t">'+mod.title+'</div><div class="d">'+mod.desc+'</div></div>' +
+      '<div class="cl-mod-dur">'+mod.duration+'</div>' +
+      '<div class="cl-mod-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(owned?PLAY_ICON:LOCK_ICON)+'</svg></div>';
+    row.addEventListener('click', function(){
+      if(owned) playModule(row, mod, key);
+      else { document.getElementById('clUnlockBox').scrollIntoView({behavior:'smooth', block:'center'}); }
+    });
+    wrap.appendChild(row);
+  });
+}
+
+function playModule(row, mod, key){
+  var holder = document.createElement('div');
+  holder.innerHTML =
+    '<div class="cl-player-wrap">' +
+      '<iframe src="https://www.youtube.com/embed/'+mod.youtubeId+'?autoplay=1" title="'+mod.title+'" allow="autoplay; encrypted-media" allowfullscreen></iframe>' +
+      '<div class="cl-player-info"><span class="t">'+mod.title+'</span><button class="cl-player-close">Close ✕</button></div>' +
+    '</div>';
+  var playerEl = holder.firstElementChild;
+  row.replaceWith(playerEl);
+  playerEl.querySelector('.cl-player-close').addEventListener('click', function(){
+    renderModuleList(key, true);
+  });
+}
+
+/* ════════════════════════════════════════════════════════════
+   ⑥  CHECKOUT → RAZORPAY → CREDENTIALS EMAIL
+   ════════════════════════════════════════════════════════════ */
+function startCheckout(key){
+  var c = COURSES[key];
+  var errBox = document.getElementById('clUnlockErr');
+  var name = document.getElementById('clName').value.trim();
+  var email = document.getElementById('clEmail').value.trim();
+  var phone = document.getElementById('clPhone').value.trim();
+  errBox.classList.remove('show');
+
+  if(!name || !email || !/\S+@\S+\.\S+/.test(email) || !phone || !/^\+?[\d\s\-]{8,15}$/.test(phone)){
+    errBox.textContent = 'Please fill in your name, a valid email, and phone number.';
+    errBox.classList.add('show');
+    return;
+  }
+  if(RAZORPAY_KEY_ID.indexOf('YOUR_KEY_ID') !== -1){
+    errBox.textContent = 'Payments are not yet configured — add your Razorpay Key ID in the code before going live.';
+    errBox.classList.add('show');
+    return;
+  }
+
+  var btn = document.getElementById('clUnlockBtn');
+  btn.disabled = true; btn.textContent = 'Opening payment…';
+
+  var rzp = new Razorpay({
+    key: RAZORPAY_KEY_ID,
+    amount: c.price * 100,
+    currency: 'INR',
+    name: 'Dr. Niraj Rawal',
+    description: c.name + ' — Course Unlock',
+    prefill: { name:name, email:email, contact:phone },
+    theme: { color:'#3f6bc4' },
+    handler: function(response){ completeUnlock(key, name, email, phone); },
+    modal: { ondismiss: function(){ btn.disabled=false; btn.textContent='Unlock This Course →'; } }
+  });
+  rzp.on('payment.failed', function(){
+    errBox.textContent = 'Payment failed. Please try again.';
+    errBox.classList.add('show');
+    btn.disabled = false; btn.textContent = 'Unlock This Course →';
+  });
+  rzp.open();
+}
+
+function completeUnlock(key, name, email, phone){
+  var c = COURSES[key];
+  var users = clGetUsers();
+  var existing = users[email];
+  var password = existing ? existing.password : clGeneratePassword();
+  var record = existing || { name:name, email:email, phone:phone, password:password, courses:[] };
+  record.name = name; record.phone = phone;
+  if(record.courses.indexOf(key) === -1) record.courses.push(key);
+  users[email] = record;
+  clSaveUsers(users);
+  clSetSession(email);
+
+  console.log('Sending unlock email →', {
+    service: EMAILJS_SERVICE_ID,
+    template: EMAILJS_CREDENTIALS_TEMPLATE_ID,
+    to_email: email
+  });
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CREDENTIALS_TEMPLATE_ID, {
+    to_name:name, to_email:email, login_email:email, login_password:password,
+    course_name:c.name, portal_url:PORTAL_URL
+  }).then(function(res){
+    console.log('EMAILJS SUCCESS:', res.status, res.text);
+  }).catch(function(err){
+    console.error('EMAILJS FAILED:', err);
+    alert('Payment succeeded, but the login email could not be sent.\n\nStatus: ' + err.status + '\nDetails: ' + err.text + '\n\nPlease save these manually for now:\nEmail: ' + email + '\nPassword: ' + password);
+  });
+
+  refreshUserChip();
+  openDetail(key); // re-render unlocked
+}
+
+/* ════════════════════════════════════════════════════════════
+   ⑦  LOGIN OVERLAY
+   ════════════════════════════════════════════════════════════ */
+var loginOverlay = document.getElementById('clLoginOverlay');
+function openLogin(){ loginOverlay.classList.add('open'); }
+function closeLogin(){ loginOverlay.classList.remove('open'); }
+document.getElementById('clOpenLogin').addEventListener('click', openLogin);
+document.getElementById('clLoginClose').addEventListener('click', closeLogin);
+loginOverlay.addEventListener('click', function(e){ if(e.target===loginOverlay) closeLogin(); });
+
+document.getElementById('clLoginBtn').addEventListener('click', function(){
+  var email = document.getElementById('clLoginEmail').value.trim();
+  var pass = document.getElementById('clLoginPassword').value;
+  var errBox = document.getElementById('clLoginErr');
+  errBox.classList.remove('show');
+  var users = clGetUsers();
+  var record = users[email];
+  if(!record || record.password !== pass){ errBox.classList.add('show'); return; }
+  clSetSession(email);
+  refreshUserChip();
+  closeLogin();
+  if(currentDetailKey && detailView.style.display === 'block') openDetail(currentDetailKey);
+  else renderCatalog();
+});
+
+document.getElementById('clLogoutBtn').addEventListener('click', function(){
+  clClearSession();
+  refreshUserChip();
+  if(detailView.style.display === 'block' && currentDetailKey) openDetail(currentDetailKey);
+  else renderCatalog();
+});
+
+var userChip = document.getElementById('clUserChip');
+var userAvatar = document.getElementById('clUserAvatar');
+var userNameEl = document.getElementById('clUserName');
+var loginLink = document.getElementById('clOpenLogin');
+function refreshUserChip(){
+  var rec = clCurrentRecord();
+  if(rec){
+    userChip.classList.add('show');
+    loginLink.style.display = 'none';
+    userAvatar.textContent = rec.name.charAt(0).toUpperCase();
+    userNameEl.textContent = rec.name.split(' ')[0];
+  } else {
+    userChip.classList.remove('show');
+    loginLink.style.display = 'inline';
+  }
+}
+
+/* ════════════════════════════════════════════════════════════
+   ⑧  INIT
+   ════════════════════════════════════════════════════════════ */
+refreshUserChip();
+renderCatalog();
+</script>
+</body>
+</html>
