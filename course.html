@@ -290,6 +290,33 @@ a{text-decoration:none;color:inherit;}
   .hero-stat-label{font-size:.52rem;}
 }
 
+/* ── PHOTO-WALLPAPER HERO VARIANT (used when a finished banner image already contains the title/branding) ──
+   The image is shown at its own natural aspect ratio (never cropped), and all interactive
+   elements (pills, CTA buttons, stat strip) sit in a solid bar BELOW the photo so nothing
+   overlaps the artwork or its baked-in text. */
+.course-hero-photo{
+  display:block;
+  min-height:0;
+  overflow:visible;
+}
+.course-hero-photo-img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+.course-hero-photo-below{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  padding:26px clamp(20px,5vw,64px);
+}
+.course-hero-photo .course-meta-pills{margin-top:0;justify-content:center;}
+.course-hero-photo .course-hero-ctas{justify-content:center;margin-top:0;}
+.course-hero-photo .hero-stat-strip{position:relative;backdrop-filter:none;}
+
 /* ── PRICE BAND ── */
 .price-band{background:var(--bg-soft);border-bottom:1px solid var(--border);padding:18px clamp(20px,6vw,80px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
 .price-band-left{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
@@ -465,22 +492,10 @@ a{text-decoration:none;color:inherit;}
 ════════════════════════════════════════════════════ -->
 <div class="course-panel active" id="panel-inner">
 
-  <div class="course-hero" style="--hero-dark:#0d0f22;background:#0d0f22;">
-    <div class="course-hero-bg">
-      <img src="image6.jpg" alt="Inner Awakening Programme 2.0">
-    <div class="course-hero-badge">
-      <span class="hero-badge-save">save</span>
-      <span class="hero-badge-pct" style="color:var(--gold-light);">80%</span>
-      <span class="hero-badge-off" style="color:var(--gold-light);">off</span>
-    </div>
-    </div>
+  <div class="course-hero course-hero-photo">
+    <img src="inner-awakening-hero.jpg" alt="Inner Awakening Programme 2.0 with Dr. Niraj Rawal" class="course-hero-photo-img">
 
-    <div class="course-hero-inner">
-      <div class="course-hero-eyebrow">
-        <span style="color:var(--gold-light);">Transformation Programme</span>
-      </div>
-      <h1>Inner Awakening<br><em>Programme 2.0</em></h1>
-      <p class="course-hook">For years, you may have been searching for answers outside. But the greatest transformation begins within.</p>
+    <div class="course-hero-photo-below" style="background:#0d0f22;">
       <div class="course-meta-pills">
         <span class="course-meta-pill">Live + Recorded</span>
         <span class="course-meta-pill">Hindi</span>
