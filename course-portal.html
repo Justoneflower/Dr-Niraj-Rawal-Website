@@ -399,6 +399,18 @@ var PORTAL_URL = window.location.href.split('?')[0];
    ②  COURSE CATALOG
    ════════════════════════════════════════════════════════════ */
 var COURSES = {
+   fear:{
+    name:'Fear to Courage', tag:'Healing', price:3499, accent:'#c46a5e', tint:'#fbeeec',
+    poster:'fearunlock.png',
+    desc:'Trace fear back to its root and build real, practiced courage in its place.',
+    modules:[
+      {title:'The Root Cause of Fear', duration:'20 min', youtubeId:'YOUTUBE_ID_FEAR_M1', desc:'How early experiences quietly install fear as a habit, then an identity.'},
+      {title:'Fear of Rejection', duration:'18 min', youtubeId:'YOUTUBE_ID_FEAR_M2', desc:'Why you shrink your opinions and let others decide for you, and how to stop.'},
+      {title:'Fear of Failure', duration:'19 min', youtubeId:'YOUTUBE_ID_FEAR_M3', desc:'Turning "not yet" into real action, one small step at a time.'},
+      {title:'Fear of Loss & Not Being Enough', duration:'22 min', youtubeId:'YOUTUBE_ID_FEAR_M4', desc:'Loosening the grip of control, and finally seeing your own value.'},
+      {title:'Fear of Uncertainty & Building Courage', duration:'24 min', youtubeId:'YOUTUBE_ID_FEAR_M5', desc:'A practical framework for decisions, plus daily courage-building practices.'}
+    ]
+  },
   thirdeye: {
     name:'Third Eye Activation', tag:'Awareness', price:1999, accent:'#6d93e0', tint:'#eef3fc',
     poster:'eyeunlock.png',
@@ -466,18 +478,6 @@ var COURSES = {
       {title:'Manifesting Your Dream Reality', duration:'27 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M3', desc:'Applying manifestation principles at an accelerated level.'},
       {title:'Activating Higher Consciousness', duration:'33 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M4', desc:'Expanding awareness beyond everyday limitations.'},
       {title:'Living as SUPER HUMAN', duration:'25 min', youtubeId:'YOUTUBE_ID_SUPERHUMAN_M5', desc:'Integrating everything into a sustained, elevated way of living.'}
-    ]
-  },
-  fear:{
-    name:'Fear to Courage', tag:'Healing', price:3499, accent:'#c46a5e', tint:'#fbeeec',
-    poster:'fearunlock.png',
-    desc:'Trace fear back to its root and build real, practiced courage in its place.',
-    modules:[
-      {title:'The Root Cause of Fear', duration:'20 min', youtubeId:'YOUTUBE_ID_FEAR_M1', desc:'How early experiences quietly install fear as a habit, then an identity.'},
-      {title:'Fear of Rejection', duration:'18 min', youtubeId:'YOUTUBE_ID_FEAR_M2', desc:'Why you shrink your opinions and let others decide for you, and how to stop.'},
-      {title:'Fear of Failure', duration:'19 min', youtubeId:'YOUTUBE_ID_FEAR_M3', desc:'Turning "not yet" into real action, one small step at a time.'},
-      {title:'Fear of Loss & Not Being Enough', duration:'22 min', youtubeId:'YOUTUBE_ID_FEAR_M4', desc:'Loosening the grip of control, and finally seeing your own value.'},
-      {title:'Fear of Uncertainty & Building Courage', duration:'24 min', youtubeId:'YOUTUBE_ID_FEAR_M5', desc:'A practical framework for decisions, plus daily courage-building practices.'}
     ]
   }
 };
@@ -794,5 +794,6 @@ function refreshUserChip(){
 refreshUserChip();
 renderCatalog();
 </script>
+<script src="coming-soon.js"></script>
 </body>
 </html>
