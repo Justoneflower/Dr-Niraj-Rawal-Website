@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Installations | Dr. Niraj Rawal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'DM Sans',sans-serif;background:#faf9ff;color:#1a1535}
+.top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;background:#fff;border-bottom:1px solid #e7e4f5;position:sticky;top:0;z-index:5}
+.top strong{font-size:16px}
+.top a{color:#fff;background:linear-gradient(135deg,#4b2fb0,#2a1f5f);text-decoration:none;font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:999px}
+.hero{text-align:center;padding:56px 20px 30px;max-width:900px;margin:0 auto}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,5.5vw,56px);margin:0 0 12px}
+.hero p{max-width:640px;margin:0 auto 26px;color:#4a4a68;line-height:1.65;font-size:16px}
+.bar{display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #d9d4f2;border-radius:999px;padding:8px 8px 8px 22px;box-shadow:0 10px 30px rgba(42,31,95,.12);max-width:760px;margin:0 auto}
+.bar:focus-within{border-color:#4b2fb0}
+.bar svg{width:22px;height:22px;color:#7b6fc4;flex-shrink:0}
+.bar input{flex:1;min-width:0;border:none;outline:none;font-size:17px;font-family:inherit;background:transparent;padding:12px 4px;color:#1a1535}
+main{max-width:1100px;margin:0 auto;padding:10px 20px 70px}
+.sec-title{font-size:22px;font-weight:700;margin:34px 0 16px}
+.sec-title span{color:#4b2fb0}
+.featured{display:grid;gap:22px;margin-top:20px}
+.note{text-align:center;color:#6a6a88;font-size:12.5px;margin-top:40px;max-width:640px;margin-left:auto;margin-right:auto;line-height:1.6}
+@media(max-width:600px){.bar{padding-left:16px}.bar input{font-size:15px}}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <strong>Dr. Niraj Rawal</strong>
+  <a href="index.html">&larr; Back to Home</a>
+</div>
+
+<div class="hero">
+  <h1>Installations by Dr. Niraj Rawal</h1>
+  <p>Each installation replaces one painful pattern with the state you actually want to live in. Tell us what you are feeling and we will open the one made for it. All installations are ₹2,999.</p>
+  <div class="bar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input id="q" type="text" autocomplete="off" placeholder="What are you feeling today? sad, angry, insecure…" aria-label="Search installations"/>
+  </div>
+</div>
+
+<main>
+  <div id="featured" class="featured"></div>
+  <div id="listHead" class="sec-title"></div>
+  <div id="list" class="ins-grid"></div>
+  <p class="note">Installations support personal growth and emotional wellbeing. They are not a substitute for medical or psychological treatment.</p>
+</main>
+
+<script src="installations-data.js"></script>
+<script>
+(function () {
+  var L = window.InsLib, ALL = window.INSTALLATIONS;
+  var params = new URLSearchParams(location.search);
+  var q = document.getElementById('q');
+  var featured = document.getElementById('featured');
+  var listHead = document.getElementById('listHead');
+  var list = document.getElementById('list');
+
+  function show(featuredItems, rest, label) {
+    featured.innerHTML = featuredItems.map(L.detail).join('');
+    listHead.innerHTML = featuredItems.length ? 'Explore all other installations' : (label || 'All installations');
+    list.innerHTML = rest.map(function (i) { return L.card(i); }).join('');
+  }
+
+  function fromQuery(text) {
+    if (!text.trim()) { show([], ALL); return; }
+    var r = L.search(text);
+    if (r.matches.length) {
+      show(r.matches.slice(0, 1), ALL.filter(function (i) { return i.id !== r.matches[0].id; }));
+    } else {
+      show([], ALL, 'No exact match for “' + L.esc(text) + '”. Browse all installations');
+    }
+  }
+
+  var id = params.get('id');
+  var preset = id && ALL.filter(function (i) { return i.id === id; })[0];
+  if (preset) {
+    show([preset], ALL.filter(function (i) { return i.id !== preset.id; }));
+  } else if (params.get('q')) {
+    q.value = params.get('q');
+    fromQuery(q.value);
+  } else {
+    show([], ALL);
+  }
+
+  q.addEventListener('input', function () { fromQuery(q.value); });
+})();
+</script>
+</body>
+</html>
